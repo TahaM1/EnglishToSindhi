@@ -6,11 +6,52 @@ import time
 import asyncio
 from asyncRequests import fetch, writeFile
 from scrape import findWebsitesInDirectory
+from googletrans import Translator
 
 # FLASK Setup
 app = Flask(__name__, static_folder="react-frontend/build", static_url_path="/")
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+translator = Translator()
 
+@app.route("/api/transliterate", methods=["POST"])
+def getSindhi():
+    
+    userInput = request.json
+    
+    sindhi = translator.translate(userInput['text'], src='en', dest='sd').text  
+    trans = ' '
+    
+    # URL of the endpoint
+    url = 'https://roman.sindhila.edu.pk/convert.php'
+
+    # Form data to be sent in the POST request
+    form_data = {
+        'text': sindhi,
+        'ChooseLang': 'roman',
+        'submit': 'Transliterate'
+    }
+    headers = {
+
+        'User-Agent': 'Mozilla',
+    }
+    # Send the POST request with form data
+    response = requests.post(url, data=form_data, headers=headers)
+
+    # Check the response status code
+    if response.status_code == 200:
+        print('Request was successful')
+        #print('Response content:', response.content)
+        prefix = "<textarea readonly=\'readonly\' rows=\'13\' id=\'copyTarget\' class=\'form-control size-20\' >"
+        trans = response.content.decode('utf-8').split(prefix)[1].split('<')[0].replace('&nbsp;', ' ')
+    else:
+        print('Request failed')
+        print('Status code:', response.status_code)
+        print('Response content:', response.content)
+        return {'links' : ["Error. Try again"]}
+
+
+
+    return {'links': [f"Original text: {userInput['text']}", f"Sindhi text: {sindhi}", f"Transliterated text: {trans}"]}
 
 @app.route("/api/scrape", methods=["POST"])
 def api():

@@ -20,7 +20,7 @@ export default class Form extends Component {
     super(props);
     this.state = {
       directory: "",
-      search: "",
+      text: "",
       location: "",
     };
 
@@ -33,14 +33,14 @@ export default class Form extends Component {
 
     const data = {
       directory: this.state.directory,
-      search: this.state.search,
+      text: this.state.text,
       location: this.state.location,
     };
 
     this.props.updateStatus(true);
     this.props.updateResponse([]);
     try {
-      fetch("/api/scrape", {
+      fetch("/api/transliterate", {
         //send post request with needed data
         method: "post",
         mode: "cors", //sending json doesnt work with no-cors
@@ -82,10 +82,13 @@ export default class Form extends Component {
               <FormControl component="fieldset">
                 <Grid item>
                   <FormLabel component="legend" color="secondary">
-                    Which Directory would you like to Search?
+                    This app converts english text to sindhi then transliterates
+                    to english text so you can read sindhi without knowing the
+                    sindhi alphabet
                   </FormLabel>
                 </Grid>
-                <Box marginTop={2}>
+                <Grid item />
+                {/* <Box marginTop={2}>
                   <Grid container item xs={12}>
                     <Grid item xs={2} />
                     <Grid item xs={8}>
@@ -109,7 +112,7 @@ export default class Form extends Component {
                       <Grid item xs={2} />
                     </Grid>
                   </Grid>
-                </Box>
+                </Box> */}
                 <FormHelperText></FormHelperText>
               </FormControl>
             </Box>
@@ -119,19 +122,9 @@ export default class Form extends Component {
                 <TextField
                   color="secondary"
                   variant="standard"
-                  name="search"
-                  label="Search"
-                  placeholder="Eg. Soccer Club"
-                  onChange={this.handleFormChange}
-                ></TextField>
-              </Grid>
-              <Grid item>
-                <TextField
-                  color="secondary"
-                  variant="standard"
-                  name="location"
-                  label="Location"
-                  placeholder="Eg. Toronto ON"
+                  name="text"
+                  label="Enter text"
+                  placeholder="What is your name?"
                   onChange={this.handleFormChange}
                 ></TextField>
               </Grid>

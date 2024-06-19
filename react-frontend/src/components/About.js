@@ -8,7 +8,7 @@ import { Typography } from "@material-ui/core";
 const About = () => {
   return (
     <Typography variant="overline" component="p" color="textSecondary">
-      Find LOCAL scholarships faster
+      Learn Sindhi FASTEr
     </Typography>
   );
 };

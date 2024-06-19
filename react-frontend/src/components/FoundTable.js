@@ -9,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@material-ui/core";
 
 export class FoundTable extends Component {
@@ -28,7 +29,7 @@ export class FoundTable extends Component {
         return (
           <TableRow key={i}>
             <TableCell align="center">
-              <a href={link}>{link}</a>
+              <Typography variant="h6">{link}</Typography>
             </TableCell>
           </TableRow>
         );
@@ -45,9 +46,7 @@ export class FoundTable extends Component {
     } else if (this.state.hasBeenCalled == true) {
       rows = (
         <TableRow>
-          <TableCell align="center">
-            No scholarships found. Try again with different terms.
-          </TableCell>
+          <TableCell align="center">Error. Try again</TableCell>
         </TableRow>
       );
     } else {
@@ -73,7 +72,7 @@ export class FoundTable extends Component {
                     <TableHead>
                       <TableRow>
                         <TableCell align="center">
-                          <strong>SCHOLARSHIPS FOUND</strong>
+                          <strong>RESULTS</strong>
                         </TableCell>
                       </TableRow>
                     </TableHead>

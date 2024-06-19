@@ -7,7 +7,7 @@ export class Title extends Component {
     return (
       <Typography component="div" variant="h2" color="textPrimary">
         <Box marginTop={9} p={0}>
-          Scholarship Scraper
+          English to Sindhi
         </Box>
       </Typography>
     );
